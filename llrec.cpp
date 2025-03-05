@@ -10,18 +10,18 @@ void llpivot(Node *&head, Node *&smaller, Node *&larger, int pivot) {
     return;
   }
 
+  // Create temporary node for head->next
   Node* temp = head->next;
 
   // If value is larger than pivot
   if (head->val > pivot) {
-    head->next = larger;
     larger = head;
+    llpivot(temp, smaller, larger->next, pivot);
   }
   // If value is less than pivot
   else if (head->val <= pivot) {
-    head->next = smaller;
     smaller = head;
+    llpivot(temp, smaller->next, larger, pivot);
   }
-  head = temp;
-  llpivot(head, smaller, larger, pivot);
+  head = nullptr;
 }
