@@ -85,24 +85,19 @@ int main(int argc, char* argv[])
     cout << "Original list: ";
     print(head);
 
-    // Test out your linked list code
-// <<<<<<< HEAD
-//     Node* smaller = new Node(0, nullptr);
-//     Node* larger = new Node(0, nullptr);
-
-//     llpivot(head, smaller, larger, 8);
-// =======
     Node* smaller;
     Node* larger;
 
-    llpivot(head, smaller, larger, 8);
-// >>>>>>> e64bb40b7b3f53969ee69f6f69f09fa59c006b6a
+    //llpivot(head, smaller, larger, 8);
+
+    // Node* filtered = llfilter(head,);
 
     print(smaller);
     print(larger);
 
     dealloc(smaller);
     dealloc(larger);
+    //dealloc(filtered);
     
     return 0;
 
