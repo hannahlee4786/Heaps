@@ -15,6 +15,7 @@ llrec-test: $(OBJS)
 llrec-test.o: llrec-test.cpp llrec.h
 	$(CXX) $(CXXFLAGS) -o $@ -c llrec-test.cpp
 llrec.o: llrec.cpp llrec.h
+	$(CXX) $(CXXFLAGS) -o $@ -c llrec.cpp
 
 clean:
 	rm -f *.o rh llrec-test *~
