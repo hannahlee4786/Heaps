@@ -2,6 +2,7 @@
 #define HEAP_H
 #include <functional>
 #include <stdexcept>
+#include <vector>
 
 template <typename T, typename PComparator = std::less<T> >
 class Heap
@@ -77,8 +78,6 @@ void Heap<T,PComparator>::swap(int idx1, int idx2) {
 // Constructor
 template <typename T, typename PComparator>
 Heap<T,PComparator>::Heap(int m, PComparator c) : m_(m), c_(c) {
-  std::vector<T> vals;
-  vals_ = vals;
 }
 
 // Destructor
