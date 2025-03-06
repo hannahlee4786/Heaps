@@ -62,21 +62,23 @@ public:
 private:
   int m_;
   PComparator c_;
-  std::vector<T> vals; // Stores the nodes
+  std::vector<T> vals_; // Stores the nodes
   void swap(int idx1, int idx2);
 };
 
 // Swaps two nodes in the heap
 template <typename T, typename PComparator>
 void Heap<T,PComparator>::swap(int idx1, int idx2) {
-  T temp = vals[idx1];
-  vals[idx1] = vals[idx2];
-  vals[idx2] = temp;
+  T temp = vals_[idx1];
+  vals_[idx1] = vals_[idx2];
+  vals_[idx2] = temp;
 }
 
 // Constructor
 template <typename T, typename PComparator>
 Heap<T,PComparator>::Heap(int m, PComparator c) : m_(m), c_(c) {
+  std::vector<T> vals;
+  vals_ = vals;
 }
 
 // Destructor
@@ -89,13 +91,13 @@ Heap<T,PComparator>::~Heap() {
 template <typename T, typename PComparator>
 void Heap<T,PComparator>::push(const T& item) {
   // Adds item to the back
-  vals.push_back(item);
+  vals_.push_back(item);
 
   // Sorts heap to min/max heap
   int idx = size() - 1;
   while (1) {
     int parentIdx = (idx - 1) / m_;
-    if (c_(vals[parentIdx], vals[idx])) {
+    if (c_(vals_[parentIdx], vals_[idx])) {
       swap(idx, parentIdx);
       idx = parentIdx;
     }
@@ -112,7 +114,7 @@ T const & Heap<T,PComparator>::top() const {
     throw std::underflow_error("Heap is empty");
   }
   // Heap has at least 1 element, return the front
-  return vals.front();
+  return vals_.front();
 }
 
 // Removes top element of heap
@@ -123,9 +125,9 @@ void Heap<T,PComparator>::pop() {
   }
 
   // Swap first and last element
-  swap(0, vals.size() - 1);
+  swap(0, vals_.size() - 1);
   // Delete last element
-  vals.pop_back();
+  vals_.pop_back();
 
   // If removing creates empty heap
   if(empty()) {
@@ -140,7 +142,7 @@ void Heap<T,PComparator>::pop() {
 
     for (int i = 0; i < m_; i++) {
       int childIdx = firstChild + i;
-      if (childIdx < vals.size() && c_(vals[childIdx], vals[bestIdx])) {
+      if (childIdx < vals_.size() && c_(vals_[childIdx], vals_[bestIdx])) {
         bestIdx = childIdx;
       }
     }
@@ -158,13 +160,13 @@ void Heap<T,PComparator>::pop() {
 // Check if heap is empty
 template <typename T, typename PComparator>
 bool Heap<T,PComparator>::empty() const {
-  return vals.empty();
+  return vals_.empty();
 }
 
 // Returns the size of heap
 template <typename T, typename PComparator>
 size_t Heap<T,PComparator>::size() const {
-  return vals.size();
+  return vals_.size();
 }
 
 #endif
