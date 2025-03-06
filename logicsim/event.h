@@ -11,11 +11,8 @@ struct Event
 
 typedef struct EventLess {
     //operator() that compares Events by time (min-heap)
-    bool operator()(Event& one, Event& two) {
-        if (one.time < two.time) {
-            return true;
-        }
-        return false;
+    bool operator()(const Event*& one, const Event*& two) const {
+        return one->time > two->time;
     }
 } EventLess;
 	
