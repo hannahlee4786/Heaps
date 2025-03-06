@@ -26,6 +26,10 @@ Circuit::~Circuit()
     {
         delete i;
     }
+    // while (!m_pq.empty()) {
+    //     delete m_pq.top();
+    //     m_pq.pop();
+    // }
 }
 
 void Circuit::test()

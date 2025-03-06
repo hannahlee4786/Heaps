@@ -6,12 +6,15 @@
 
 void llpivot(Node *&head, Node *&smaller, Node *&larger, int pivot) {
   // If went thru all items in list
-  if (head == nullptr) {
+  if (head == NULL) {
+    smaller = NULL;
+    larger = NULL;
     return;
   }
 
   // Create temporary node for head->next
   Node* temp = head->next;
+  head->next = NULL; // Breaks link
 
   // If value is larger than pivot
   if (head->val > pivot) {
@@ -23,5 +26,5 @@ void llpivot(Node *&head, Node *&smaller, Node *&larger, int pivot) {
     smaller = head;
     llpivot(temp, smaller->next, larger, pivot);
   }
-  head = nullptr;
+  head = NULL;
 }

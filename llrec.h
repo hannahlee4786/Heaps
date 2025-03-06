@@ -83,8 +83,8 @@ Node* llfilter(Node* head, Comp pred)
     //*********************************************
     // Provide your implementation below
     //*********************************************
-    if (head == nullptr) {
-        return nullptr;
+    if (head == NULL) {
+        return NULL;
     }
     else if (pred(head->val)) {
         // Create temporary node without the head node to be removed

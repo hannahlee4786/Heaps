@@ -96,7 +96,7 @@ void Heap<T,PComparator>::push(const T& item) {
   int idx = size() - 1;
   while (1) {
     int parentIdx = (idx - 1) / m_;
-    if (c_(vals_[parentIdx], vals_[idx])) {
+    if (c_(vals_[idx], vals_[parentIdx])) {
       swap(idx, parentIdx);
       idx = parentIdx;
     }
