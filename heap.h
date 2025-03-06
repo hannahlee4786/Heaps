@@ -60,56 +60,112 @@ public:
   size_t size() const;
 
 private:
-  /// Add whatever helper functions and data members you need below
-
-
-
-
+  int m_;
+  PComparator c_;
+  std::vector<T> vals; // Stores the nodes
+  void swap(int idx1, int idx2);
 };
 
-// Add implementation of member functions here
-
-
-// We will start top() for you to handle the case of 
-// calling top on an empty heap
+// Swaps two nodes in the heap
 template <typename T, typename PComparator>
-T const & Heap<T,PComparator>::top() const
-{
-  // Here we use exceptions to handle the case of trying
-  // to access the top element of an empty heap
-  if(empty()){
-    // ================================
-    // throw the appropriate exception
-    // ================================
+void Heap<T,PComparator>::swap(int idx1, int idx2) {
+  T temp = vals[idx1];
+  vals[idx1] = vals[idx2];
+  vals[idx2] = temp;
+}
 
+// Constructor
+template <typename T, typename PComparator>
+Heap<T,PComparator>::Heap(int m=2, PComparator c = PComparator()) : 
+  m_(m), c_(c) {
+}
 
-  }
-  // If we get here we know the heap has at least 1 item
-  // Add code to return the top element
-
-
+// Destructor
+template <typename T, typename PComparator>
+Heap<T,PComparator>::~Heap() {
 
 }
 
-
-// We will start pop() for you to handle the case of 
-// calling top on an empty heap
+// Adds an item to the heap
 template <typename T, typename PComparator>
-void Heap<T,PComparator>::pop()
-{
-  if(empty()){
-    // ================================
-    // throw the appropriate exception
-    // ================================
+void Heap<T,PComparator>::push(const T& item) {
+  // Adds item to the back
+  vals.push_back(item);
 
-
+  // Sorts heap to min/max heap
+  int idx = size() - 1;
+  while (1) {
+    int parentIdx = (idx - 1) / m_;
+    if (c_(vals[idx], vals[parentIdx])) {
+      swap(idx, parentIdx);
+      idx = parentIdx;
+    }
+    else {
+      break;
+    }
   }
-
-
-
 }
 
+// Gives top element of heap
+template <typename T, typename PComparator>
+T const & Heap<T,PComparator>::top() const {
+  if(empty()){
+    throw std::underflow_error("Heap is empty");
+  }
+  // Heap has at least 1 element, return the front
+  return vals.front();
+}
 
+// Removes top element of heap
+template <typename T, typename PComparator>
+void Heap<T,PComparator>::pop() {
+  if(empty()){
+    throw std::underflow_error("Heap is empty");
+  }
+
+  // Swap first and last element
+  swap(0, vals.size() - 1);
+  // Delete last element
+  vals.pop_back();
+
+  // If removing creates empty heap
+  if(empty()) {
+    return;
+  }
+  
+  // Heapify
+  int currentIdx = 0;
+  while (1) {
+    int bestIdx = currentIdx;
+    int firstChild = m_ * currentIdx + 1;
+
+    for (int i = 0; i < m_; i++) {
+      int childIdx = firstChild + i;
+      if (childIdx < vals.size() && c_(vals[childIdx], vals[bestIdx])) {
+        bestIdx = childIdx;
+      }
+    }
+
+    // If no swap is needed, we are done
+    if (bestIdx == currentIdx) {
+      break;
+    }
+    // Else swap
+    swap(currentIdx, bestIdx);
+    currentIdx = bestIdx;
+  }
+}
+
+// Check if heap is empty
+template <typename T, typename PComparator>
+bool Heap<T,PComparator>::empty() const {
+  return vals.empty();
+}
+
+// Returns the size of heap
+template <typename T, typename PComparator>
+size_t Heap<T,PComparator>::size() const {
+  return vals.size();
+}
 
 #endif
-
