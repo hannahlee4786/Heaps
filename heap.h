@@ -76,8 +76,7 @@ void Heap<T,PComparator>::swap(int idx1, int idx2) {
 
 // Constructor
 template <typename T, typename PComparator>
-Heap<T,PComparator>::Heap(int m=2, PComparator c = PComparator()) {
-  
+Heap<T,PComparator>::Heap(int m, PComparator c) : m_(m), c_(c) {
 }
 
 // Destructor
